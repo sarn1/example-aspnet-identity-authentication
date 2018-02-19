@@ -13,5 +13,35 @@ https://code.tutsplus.com/courses/authentication-with-aspnet-identity
 - More notes in `App_start/IdentityConfig.cs` like changing password options, spceial characters in username, email service, etc..
 - `Controller/AccountController.cs` in login, the password is not hashed, that is done internally.
 
+# 2.2 Identity From Scratch Or For Existing Project Without Identity ##
+- Simulates a project that didn't have Identity.  New project > empty MVC.
+- Must install from Nuget: `Microsoft.Owin.Host.SystemWeb`, `Microsoft.Owin.Security`, `Microsoft.Owin.Security.OAuth`, `Microsoft.Owin.Security.Cookies`, `Microsoft.AspNet.Identity.Core`, `Microsoft.AspNet.Identity.Owin`, `Microsoft.AspNet.Identiy.EntityFramework`
+- You will get this error when compiling.  If you got versioning issue errors, then you need to edit your config files since Nuget messed up.
+![Image of Error](https://octodex.github.com/images/yaktocat.png)
+
+```csharp
+// StartUp.cs
+
+using Microsoft.Owin;
+using Owin;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+[assembly:OwinStartupAttribute(typeof(IdentityFromScratch.StartUp))]
+namespace IdentityFromScratch
+{
+    public class StartUp
+    {
+        public void Configuration(IAppBuilder app)
+        {
+
+        }
+
+    }
+}
+
+```
 
 
