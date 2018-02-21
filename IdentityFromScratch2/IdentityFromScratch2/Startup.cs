@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using IdentityFromScratch2.Models;
+using Microsoft.Owin;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,9 @@ namespace IdentityFromScratch2
     {
         public void Configuration(IAppBuilder app)
         {
-
+            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(ApplicationUserManager.Create);
         }
 
-    }
+}
 }

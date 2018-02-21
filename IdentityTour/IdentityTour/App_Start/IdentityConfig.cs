@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using IdentityTour.Models;
+using System.Net.Mail;
 
 namespace IdentityTour
 {
@@ -18,8 +19,26 @@ namespace IdentityTour
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            var emailMessage = new MailMessage
+            {
+                From = new MailAddress("email@gmail.com", "My Email"),
+                Subject = message.Subject,
+                Body = message.Body,
+                IsBodyHtml = true
+            };
+
+            emailMessage.To.Add(message.Destination);
+
+
+            try
+            {
+                var client = new SmtpClient();
+                return client.SendMailAsync(emailMessage);
+            } catch
+            {
+                // Plug in your email service here to send an email.
+                return Task.FromResult(0);
+            }
         }
     }
 
