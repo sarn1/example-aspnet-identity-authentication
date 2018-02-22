@@ -6,6 +6,8 @@ This course will teach you how to use Microsoft's Identity framework—a complete 
 
 https://code.tutsplus.com/courses/authentication-with-aspnet-identity
 
+** Github **: https://github.com/tutsplus/authentication-with-aspnet-identity
+
 ** THE EXAMPLES WILL NOT WORK - FOR LOOKING AT CODE ONLY **
 
 ## 2.1 ##
@@ -112,3 +114,43 @@ public Task SendAsync(IdentityMessage message)
 }
 ```
 - To have Identity to email when register, uncomment code in `public async Task<ActionResult> Register(RegisterViewModel model)` in AccountController.cs.
+
+## 5.1 Creating a Role Manager ##
+- Creating a `ApplicationRoleManager` in IdentityConfig in the original Github code.
+- Code to add a user role to a user via code rather than doing it manually in the database.
+
+## 5.2 Authorizing Users ##
+- [Using attributes to control access but also via code, see AccountingController.cs in the original Github code.](https://github.com/tutsplus/authentication-with-aspnet-identity/blob/master/5.2/IdentityFromScratch/IdentityFromScratch/Controllers/AccountingController.cs)
+
+```csharp
+public ActionResult EmployeeList()
+{
+	// quick write to screen for Controller
+	return Content("TEST");
+}
+
+namespace IdentityFromScratch.Controllers
+{
+    [Authorize(Roles="accounting,admin")]
+    public class AccountingController : BaseController
+    {
+        // GET: Accounting
+        public ActionResult Index()
+        {
+            //var roles = UserManager.GetRolesAsync(User.Identity.GetUserId());
+
+            if (User.IsInRole(SecurityRoles.Admin))
+            {
+                return Content("welcome to accounting");
+            }
+            else
+            {
+                return Content("get to back work");
+                
+            }
+        }
+    }
+}
+
+
+```
